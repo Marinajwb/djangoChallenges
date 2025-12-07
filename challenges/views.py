@@ -1,7 +1,12 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseNotFound
+from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 # Create your views here.
-
+monthly_challenges = {
+    "january"  : "Eat no meat for the entire month!",
+    "fabruary" : "walk for at leat 20 minutes everyday",
+    "march"    :  "i love my cats" ,
+    "june"     :  "i love my two cats" 
+}
 def index(request):
     return HttpResponse("This works")
 
@@ -12,16 +17,18 @@ def march(request):
     return HttpResponse("i love my cat")
 
 def monthly_number_challenge(req,month):
-    return HttpResponse(month)
+    months = list(monthly_challenges.keys())
+    
+    if month > len(month):
+       return HttpResponseNotFound("invalid month")
+    
+    redirect_month = months[month-0]
+    return HttpResponseRedirect("/challenges/" + redirect_month )
 
 def monthly_challenge(request, month):
-    challenge_text = None
-    if month == "january":
-        challenge_text = "Eat no meat for the entire life!!"
-    elif month == "february":
-        challenge_text = "walk for ay leat 20 minute everyday"
-    elif month == "march":
-        challenge_text = "i love my cats" 
-    else:
-        return HttpResponseNotFound("This month is not supported! 그리고 우리집 고양이는 귀여워용ㅎㅎ")
+   try:
+    challenge_text = monthly_challenges[month]
     return HttpResponse(challenge_text)
+   except:
+    return  HttpResponseNotFound("My cats are the best!!!!")  
+    
