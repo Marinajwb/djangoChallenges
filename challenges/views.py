@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
+from django.urls import reverse
 # Create your views here.
 monthly_challenges = {
     "january"  : "Eat no meat for the entire month!",
@@ -20,10 +21,11 @@ def monthly_number_challenge(req,month):
     months = list(monthly_challenges.keys())
     
     if month > len(month):
-       return HttpResponseNotFound("invalid month")
+       return HttpResponseNotFound("Invalid month")
     
     redirect_month = months[month-0]
-    return HttpResponseRedirect("/challenges/" + redirect_month )
+    redirect_path = reverse("month-challenge",args=[redirect_month]) #challenges/january
+    return HttpResponseRedirect(redirect_path)
 
 def monthly_challenge(request, month):
    try:
