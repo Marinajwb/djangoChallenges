@@ -8,14 +8,24 @@ monthly_challenges = {
     "march"    :  "i love my cats" ,
     "june"     :  "i love my two cats" 
 }
+
 def index(request):
-    return HttpResponse("This works")
-
-def february(request):
-    return HttpResponse("work for at 20 minutes every ")
-
-def march(request):
-    return HttpResponse("i love my cat")
+  list_items = ""
+  months = list(monthly_challenges.keys())
+  
+  for month in months:
+    capitalized_month = month.capitalize()
+    month_path = reverse("month-challenge", args = [month]) 
+    list_items += f"<li><a href=\"{month_path}\">{capitalized_month}</a></li>"
+  
+  #"<li><a href="...">...</li><li>...</li><li>...</li>"
+  
+  reponse_data = """
+    <ul>
+        <li><a href="challenges/january">January</a></li>
+    </ul>
+  """
+  return HttpResponse()
 
 def monthly_number_challenge(req,month):
     months = list(monthly_challenges.keys())
@@ -24,13 +34,14 @@ def monthly_number_challenge(req,month):
        return HttpResponseNotFound("Invalid month")
     
     redirect_month = months[month-0]
-    redirect_path = reverse("month-challenge",args=[redirect_month]) #challenges/january
+    redirect_path = reverse("month-challenge",args=[redirect_month]) #/challenges/january
     return HttpResponseRedirect(redirect_path)
 
 def monthly_challenge(request, month):
    try:
     challenge_text = monthly_challenges[month]
-    return HttpResponse(challenge_text)
+    response_data = f"<h1>{challenge_text}</h1>"
+    return HttpResponse(response_data)
    except:
-    return  HttpResponseNotFound("My cats are the best!!!!")  
+    return  HttpResponseNotFound("<h1>My cats are the best!!!!</h1>")  
     
