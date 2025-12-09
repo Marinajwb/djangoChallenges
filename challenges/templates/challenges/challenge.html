@@ -1,15 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monthly Challenge</title>
-</head>
-<body>
-    <h1>Albam means chestnut in Korea</h1>
-    <h2>Name of my cat is Albam supercute</h2>
+{% extends "base.html" %}
 
+{% block page_title %}
+    {{month_name | title}} cats
+{% endblock %}
 
+    <h1>Albam means chestnut {{month_name | title}}  in Korea</h1>
+    {% if cats is not None %}
+    <h2>{{ cats }}</h2>
+     {% else %}
+    <p>There would be no life without cats</p>
+    {% endif %}
 
-</body>
-</html>
+<

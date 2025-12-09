@@ -6,19 +6,22 @@ from django.template.loader import render_to_string
 monthly_challenges = {
     "january"  : "Eat no meat for the entire month!",
     "fabruary" : "walk for at leat 20 minutes everyday",
-    "march"    :  "i love my cats" ,
-    "june"     :  "i love my two cats" 
+    "march"    : "i love my cats" ,
+    "april"    : "i love happy ",
+    "may"      : "i love albam",
+    "june"     : "i love my two cats" ,
+    "july"     : "i love my life",
+    "august"   : "i want to travel ",
+    "september": None
 }
 
 def index(request):
   list_items = ""
   months = list(monthly_challenges.keys())
-  
-  for month in months:
-    capitalized_month = month.capitalize()
-    month_path = reverse("month-challenge", args = [month]) 
-    list_items += f"<li><a href=\"{month_path}\">{capitalized_month}</a></li>"
-  
+  return render(request, "challenges/index.html",
+                {
+                  "months" : months
+                } )
   #"<li><a href="...">...</li><li>...</li><li>...</li>"
   
   reponse_data = f"<ul>{list_items}</ul>"
@@ -43,9 +46,10 @@ def monthly_number_challenge(req,month):
 def monthly_challenge(request, month):
    try:
     challenge_text = monthly_challenges[month]
-    return render(request, "challenges/challenge.html")
-    response_data = render_to_string("challenges/challenge.html")
-    return HttpResponse(response_data)
+    return render(request, "challenges/challenge.html",{
+       "cats"         : challenge_text
+     , "month_name"   : month
+    })
    except:
     return  HttpResponseNotFound("<h1>My cats are the best!!!!</h1>")  
     
