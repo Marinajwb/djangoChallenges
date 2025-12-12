@@ -4,11 +4,13 @@
     {{month_name | title}} cats
 {% endblock %}
 
+
+{% block content %}
+    {% include "challenges/includes/header.html"  %}
     <h1>Albam means chestnut {{month_name | title}}  in Korea</h1>
     {% if cats is not None %}
     <h2>{{ cats }}</h2>
      {% else %}
     <p>There would be no life without cats</p>
-    {% endif %}
-
-<
+    {% endif %} 
+{% endblock %}
